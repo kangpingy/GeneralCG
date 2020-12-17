@@ -41,8 +41,16 @@
 #'
 #'@export
 #'
-#'
 general_CG <- function(A,B,C,tol= 1e-20,max.iter = 10000){
+  if (length(A) != length(B) | length(C)^2 != length(A)){
+    stop("Please Check the number of matrixes of A, B and C!")
+  }
+  dim_X <- dimCalculator(A,B,C)
+  X <- vector("list",length = dim(dim_X)[2])
+  for (i in 1:length(X)) {
+    X[[i]] <- matrix(0,dim_X[1,i],dim_X[2,i])
+  }
+  zeros_X <- X
   save_sum <- C
   length_A <- length(A)
   length_X <- sqrt(length_A)
@@ -122,21 +130,14 @@ C <- list(C1,C2,C3)
 A <- list(A11,A12,A13,A21,A22,A23,A31,A32,A33)
 B <- list(B11,B12,B13,B21,B22,B23,B31,B32,B33)
 
-## Step 1
-X1 <- matrix(0,dim(A11)[2],dim(B11)[1])
-X2 <- matrix(0,dim(A12)[2],dim(B12)[1])
-X3 <- matrix(0,dim(A13)[2],dim(B13)[1])
-zeros_X <- list(X1,X2,X3)
-X <- list(X1,X2,X3)
-## Return Result
-X <- general_CG(A,B,C)
-## Verification
-A11%*%X[[1]]%*%B11 + A12%*%X[[2]]%*%B12 + A13%*%X[[3]]%*%B13
-C1
-A21%*%X[[1]]%*%B21 + A22%*%X[[2]]%*%B22 + A23%*%X[[3]]%*%B23
-C2
-A31%*%X[[1]]%*%B31 + A32%*%X[[2]]%*%B32 + A33%*%X[[3]]%*%B33
-C3
+#
+# ## Verification
+# A11%*%X[[1]]%*%B11 + A12%*%X[[2]]%*%B12 + A13%*%X[[3]]%*%B13
+# C1
+# A21%*%X[[1]]%*%B21 + A22%*%X[[2]]%*%B22 + A23%*%X[[3]]%*%B23
+# C2
+# A31%*%X[[1]]%*%B31 + A32%*%X[[2]]%*%B32 + A33%*%X[[3]]%*%B33
+# C3
 
 #library("microbenchmark")
 #microbenchmark(general_CG(A,B,C,max.iter = 100000),sylvester(A,B,C))
