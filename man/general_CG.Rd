@@ -42,11 +42,6 @@ C3 <- matrix(c(-1:4),2,3)
 C <- list(C1,C2,C3)
 A <- list(A11,A12,A13,A21,A22,A23,A31,A32,A33)
 B <- list(B11,B12,B13,B21,B22,B23,B31,B32,B33)
-X1 <- matrix(0,dim(A11)[2],dim(B11)[1])
-X2 <- matrix(0,dim(A12)[2],dim(B12)[1])
-X3 <- matrix(0,dim(A13)[2],dim(B13)[1])
-zeros_X <- list(X1,X2,X3)
-X <- list(X1,X2,X3)
 general_CG(A,B,C)
 
 }
